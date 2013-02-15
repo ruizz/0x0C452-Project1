@@ -1,16 +1,29 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
+#include <FL/fl_draw.H>
+#include <FL/Fl_Widget.H>
+
+// Class that fills the entire window to a single color.
+class FillBackground : public Fl_Widget {
+public:
+	FillBackground(int W, int Y) : Fl_Widget(0,0,W,Y,0) { }
+
+	void draw() {
+		fl_color(178, 207, 59); // Same color as the green on the website
+		int x1 = w();
+		int y1 = h();
+		fl_rectf(0, 0, x1, y1);
+	}
+};
 
 int main(int argc, char **argv) {
-  Fl_Window *window = new Fl_Window(1020,765);
-  Fl_Box *ctl = new Fl_Box(720,40,200,250,"");
-  Fl_Box *drw_spc = new Fl_Box(20,40,600,500,"");
+	Fl_Window window(10, 10, 950, 700);
 
-  ctl->box(FL_UP_BOX);
-  drw_spc->box(FL_UP_BOX);
+	FillBackground fillBackground(window.w(), window.h());
+	Fl_Box drawSpace(30, 30, 890, 488, ""); drawSpace.box(FL_DOWN_BOX);
+	Fl_Box controlPanel(30, 548, 890, 122, ""); controlPanel.box(FL_DOWN_BOX);
 
-  window->end();
-  window->show(argc, argv);
-  return Fl::run();
+	window.show();
+	return Fl::run();
 }
