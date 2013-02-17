@@ -1,0 +1,9 @@
+0x0C452
+Project 1: TAMU PaintBot
+The goal of this project was to design a three rotary joint robot (RRR) capable of painting. This robot would also have the ability to have its’ joints rotated by an external user. The frame attachments and corresponding D-H parameters are shown below:
+  ai-1	αi-1	di	Θi
+1	0	0	0	Θ1
+2	150	0	0	Θ2
+3	100	0	0	Θ3
+
+//Due to formatting issues I can't show you the project report on the SVN, but I will upload this onto the website ASAP.
