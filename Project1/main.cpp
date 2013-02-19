@@ -5,9 +5,12 @@
 #include <FL/Fl_Widget.H>
 #include <FL/Fl_Button.H>
 
+#define MIDDLEX 475
+
 int angle1 = 0;
 int angle2 = 0;
 int angle3 = 0;
+
 
 // Class that fills the entire window to a single color.
 class FillBackground : public Fl_Widget {
@@ -22,14 +25,78 @@ public:
 	}
 };
 
+class CreateBase : public Fl_Widget {
+public:
+	CreateBase(int x, int y, int W, int H) : Fl_Widget(x, y, W, H,0) { }
+
+	void draw() {
+		fl_color(64, 79, 89); // Same color as the green on the website
+		int w1 = w();
+		int h1 = h();
+		int x1 = x();
+		int y1 = y();
+		fl_rectf(x1, y1, w1, h1);
+	}
+};
+
+class CreateCircle : public Fl_Widget {
+public:
+	CreateCircle(int x, int y) : Fl_Widget(x, y, 0, 0, 0) { }
+
+	void draw() {
+		fl_color(64, 79, 89); // Same color as the green on the website
+		int x1 = x()-5;
+		int y1 = y()-5;
+		fl_pie(x1, y1, 10, 10, 0, 360);
+	}
+};
+
+class CreateLine : public Fl_Widget {
+public:
+	CreateLine(int x1, int y1, int x2, int y2) : Fl_Widget(x1, y1, x2, y2,0) { }
+
+	void draw() {
+		fl_color(64, 79, 89); // Same color as the green on the website
+		int x1 = x();
+		int y1 = y();
+		int x2 = w();
+		int y2 = h();
+		fl_line(x1, y1, x2, y2);
+	}
+};
+
+class CreateBrush : public Fl_Widget {
+public:
+	CreateBrush(int x, int y) : Fl_Widget(x, y, 0, 0, 0) { }
+
+	void draw() {
+		fl_color(64, 79, 89); // Same color as the green on the website
+		int x1 = x();
+		int y1 = y();
+		fl_circle(x1, y1, 5);
+	}
+};
+
 int main(int argc, char **argv) {
 	Fl_Window window(10, 10, 950, 700, "PaintBot");
 
 	FillBackground fillBackground(window.w(), window.h());
 	Fl_Box drawSpace(30, 30, 890, 488, ""); drawSpace.box(FL_DOWN_BOX);
 	Fl_Box controlPanel(30, 548, 890, 122, ""); controlPanel.box(FL_DOWN_BOX);
+	
+	CreateBase base(450,460, 50,30);
 
+	CreateCircle joint1Circ(475, 460);
+	CreateLine link1(475, 460, 475, 325);
+	
+	CreateCircle joint2Circ(475, 330);
+	CreateLine link2(475, 325, 475, 225);
 
+	CreateCircle joint3Circ(475, 230);
+	CreateLine link3(475, 225, 475, 150);
+
+	CreateBrush brush(475, 150);
+	
 	Fl_Box joint1_txt(215, 550, 30, 15, "Joint 1");
 	Fl_Button j1_cc(150, 570, 60, 30, "-");
 	Fl_Button j1_cl(250, 570, 60, 30, "+");
@@ -43,6 +110,7 @@ int main(int argc, char **argv) {
 	Fl_Button j3_cl(740, 570, 60, 30, "+");
 
 	Fl_Button paint(445, 610, 60, 30, "Paint");
+
 	
 	
 	joint1_txt.show();
