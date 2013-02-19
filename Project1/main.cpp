@@ -77,6 +77,30 @@ public:
 	}
 };
 
+void j1_cc_callback(Fl_Widget*, void* v) {
+
+}
+
+void j1_cl_callback(Fl_Widget*, void* v) {
+
+}
+
+void j2_cc_callback(Fl_Widget*, void* v) {
+
+}
+
+void j2_cl_callback(Fl_Widget*, void* v) {
+
+}
+
+void j3_cc_callback(Fl_Widget*, void* v) {
+
+}
+
+void j3_cl_callback(Fl_Widget*, void* v) {
+
+}
+
 int main(int argc, char **argv) {
 	Fl_Window window(10, 10, 950, 700, "PaintBot");
 
@@ -100,14 +124,23 @@ int main(int argc, char **argv) {
 	Fl_Box joint1_txt(215, 550, 30, 15, "Joint 1");
 	Fl_Button j1_cc(150, 570, 60, 30, "-");
 	Fl_Button j1_cl(250, 570, 60, 30, "+");
+
+	j1_cc.callback(j1_cc_callback, NULL);
+	//j1_cl.callback(j1_cl_callback, NULL);
 	
 	Fl_Box joint2_txt(460, 550, 30, 15, "Joint 2");
 	Fl_Button j2_cc(395, 570, 60, 30, "-");
 	Fl_Button j2_cl(495, 570, 60, 30, "+");
 
+	//j2_cc.callback(j2_cc_callback, NULL);
+	//j2_cl.callback(j2_cl_callback, NULL);
+
 	Fl_Box joint3_txt(705, 550, 30, 15, "Joint 3");
 	Fl_Button j3_cc(640, 570, 60, 30, "-");
 	Fl_Button j3_cl(740, 570, 60, 30, "+");
+
+	//j3_cc.callback(j3_cc_callback, NULL);
+	//j3_cl.callback(j3_cl_callback, NULL);
 
 	Fl_Button paint(445, 610, 60, 30, "Paint");
 
