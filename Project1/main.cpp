@@ -126,21 +126,21 @@ int main(int argc, char **argv) {
 	Fl_Button j1_cl(250, 570, 60, 30, "+");
 
 	j1_cc.callback(j1_cc_callback, NULL);
-	//j1_cl.callback(j1_cl_callback, NULL);
+	j1_cl.callback(j1_cl_callback, NULL);
 	
 	Fl_Box joint2_txt(460, 550, 30, 15, "Joint 2");
 	Fl_Button j2_cc(395, 570, 60, 30, "-");
 	Fl_Button j2_cl(495, 570, 60, 30, "+");
 
-	//j2_cc.callback(j2_cc_callback, NULL);
-	//j2_cl.callback(j2_cl_callback, NULL);
+	j2_cc.callback(j2_cc_callback, NULL);
+	j2_cl.callback(j2_cl_callback, NULL);
 
 	Fl_Box joint3_txt(705, 550, 30, 15, "Joint 3");
 	Fl_Button j3_cc(640, 570, 60, 30, "-");
 	Fl_Button j3_cl(740, 570, 60, 30, "+");
 
-	//j3_cc.callback(j3_cc_callback, NULL);
-	//j3_cl.callback(j3_cl_callback, NULL);
+	j3_cc.callback(j3_cc_callback, NULL);
+	j3_cl.callback(j3_cl_callback, NULL);
 
 	Fl_Button paint(445, 610, 60, 30, "Paint");
 
