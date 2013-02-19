@@ -25,12 +25,26 @@ public:
 	}
 };
 
+class FillBoxBackground : public Fl_Widget {
+public:
+	FillBoxBackground(int x, int y, int W, int H) : Fl_Widget(x, y, W, H,0) { }
+
+	void draw() {
+		fl_color(64, 79, 89);
+		int w1 = w();
+		int h1 = h();
+		int x1 = x();
+		int y1 = y();
+		fl_rectf(x1, y1, w1, h1);
+	}
+};
+
 class CreateBase : public Fl_Widget {
 public:
 	CreateBase(int x, int y, int W, int H) : Fl_Widget(x, y, W, H,0) { }
 
 	void draw() {
-		fl_color(64, 79, 89); // Same color as the green on the website
+		fl_color(255, 255, 255);
 		int w1 = w();
 		int h1 = h();
 		int x1 = x();
@@ -44,7 +58,7 @@ public:
 	CreateCircle(int x, int y) : Fl_Widget(x, y, 0, 0, 0) { }
 
 	void draw() {
-		fl_color(64, 79, 89); // Same color as the green on the website
+		fl_color(255, 255, 255);
 		int x1 = x()-5;
 		int y1 = y()-5;
 		fl_pie(x1, y1, 10, 10, 0, 360);
@@ -56,7 +70,7 @@ public:
 	CreateLine(int x1, int y1, int x2, int y2) : Fl_Widget(x1, y1, x2, y2,0) { }
 
 	void draw() {
-		fl_color(64, 79, 89); // Same color as the green on the website
+		fl_color(255, 255, 255);
 		int x1 = x();
 		int y1 = y();
 		int x2 = w();
@@ -70,7 +84,7 @@ public:
 	CreateBrush(int x, int y) : Fl_Widget(x, y, 0, 0, 0) { }
 
 	void draw() {
-		fl_color(64, 79, 89); // Same color as the green on the website
+		fl_color(255, 255, 255);
 		int x1 = x();
 		int y1 = y();
 		fl_circle(x1, y1, 5);
@@ -105,7 +119,8 @@ int main(int argc, char **argv) {
 	Fl_Window window(10, 10, 950, 700, "PaintBot");
 
 	FillBackground fillBackground(window.w(), window.h());
-	Fl_Box drawSpace(30, 30, 890, 488, ""); drawSpace.box(FL_DOWN_BOX);
+	FillBoxBackground fillBoxBackground(31, 31, 888, 486);
+	Fl_Box drawSpace(30, 30, 890, 488, ""); drawSpace.box(FL_DOWN_FRAME);
 	Fl_Box controlPanel(30, 548, 890, 122, ""); controlPanel.box(FL_DOWN_BOX);
 	
 	CreateBase base(450,460, 50,30);
