@@ -11,6 +11,7 @@
 int angle1 = 0;
 int angle2 = 0;
 int angle3 = 0;
+bool painting = false;
 
 Lines* arms;
 
@@ -105,9 +106,9 @@ public:
 
 	void draw() {
 		fl_color(255, 255, 255);
-		int x1 = x();
-		int y1 = y();
-		fl_circle(x1, y1, 5);
+		int x1 = x()-15;
+		int y1 = y()-15;
+		fl_pie(x1, y1, 30, 30, 0, 360);
 	}
 };
 
@@ -174,6 +175,12 @@ void j3_cl_callback(Fl_Widget*, void* v) {
 	arms->rotate(-1, 2);
 }
 
+void paint_callback(Fl_Widget*, void* v) {
+	painting = !painting;
+	if(painting){printf("Begin painting\n");}
+	if(!painting){printf("End painting\n");}
+}
+
 int main(int argc, char **argv) {
 	Fl_Window window(10, 10, 950, 700, "PaintBot");
 
@@ -195,7 +202,7 @@ int main(int argc, char **argv) {
 	CreateCircle joint3Circ(475, 230);
 	//CreateLine link3(475, 225, 475, 150);
 
-	//CreateBrush brush(475, 150);
+	CreateBrush brush(475, 150);
 	
 	arms = new Lines();
 
@@ -221,6 +228,8 @@ int main(int argc, char **argv) {
 	j3_cl.callback(j3_cl_callback, NULL);
 
 	Fl_Button paint(445, 610, 60, 30, "Paint");
+	
+	paint.callback(paint_callback, NULL);
 
 	
 	
