@@ -179,6 +179,7 @@ void paint_callback(Fl_Widget*, void* v) {
 	painting = !painting;
 	if(painting){printf("Begin painting\n");}
 	if(!painting){printf("End painting\n");}
+	//still need a bloody way to move brush with lines, will discuss during meeting
 }
 
 int main(int argc, char **argv) {
