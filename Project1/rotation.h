@@ -125,9 +125,9 @@ public:
 
 	Lines()
 	{
-		lines[0] = new Line(0,0,0,150);
-		lines[1] = new Line(0,150,0,250);
-		lines[2] = new Line(0,250,0,325);
+		lines[0] = new Line(-25,280,-25,430);
+		lines[1] = new Line(-25,430,-25,530);
+		lines[2] = new Line(-25,530,-25,605);
 	}
 	void rotate(double degree, int axis)
 	{
