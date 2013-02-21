@@ -162,7 +162,7 @@ public:
 	}
 };
 
-void Line::rot(double deg, double x_axis, double y_axis)
+Pos* Line::rot(double deg, double x_axis, double y_axis)
 {
 	Matrix* mat = new Matrix(4,1);
 	mat->data[0][0] = x1-x_axis;
@@ -170,8 +170,13 @@ void Line::rot(double deg, double x_axis, double y_axis)
 	mat->data[2][0] = 0;
 	mat->data[3][0] = 1;
 	Matrix* result = rotate(mat, deg, x_axis,y_axis);
-	x1 = result->data[0][0];
-	y1 = result->data[1][0];
+	if((ln != 0 &&result->data[1][0]<230) || (ln==0 && result->data[1][0]<280))
+	{
+		printf("eeeeeeeeee1111111111111111111111\n");
+		return 0;
+	}
+	
+	
 	printf("=======================\n");
 	for(int i=0; i<result->row; i++)
 	{
@@ -188,8 +193,19 @@ void Line::rot(double deg, double x_axis, double y_axis)
 	mat2->data[2][0] = 0;
 	mat2->data[3][0] = 1;
 	Matrix* result2 = rotate(mat2, deg, x_axis,y_axis);
+	if((ln != 0 &&result2->data[1][0]<230) || (ln==0 && result2->data[1][0]<280))
+	{
+		printf("322222222222222222222222222222222\n");
+		return 0;
+	}
+	printf("4333333333333333333333333333\n");
+	/*
+	x1 = result->data[0][0];
+	y1 = result->data[1][0];
 	x2 = result2->data[0][0];
 	y2 = result2->data[1][0];
+	*/
+
 	printf("=======================\n");
 	for(int i=0; i<result2->row; i++)
 	{
@@ -199,6 +215,7 @@ void Line::rot(double deg, double x_axis, double y_axis)
 		}
 		printf("\n");
 	}
+	return new Pos(result->data[0][0],result->data[1][0],result2->data[0][0],result2->data[1][0]);
 }
 
 void j1_cc_callback(Fl_Widget*, void* v) {
