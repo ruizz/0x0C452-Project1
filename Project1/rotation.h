@@ -44,7 +44,7 @@ public:
 				}
 			}
 		}
-		
+
 		return result;
 	}
 };
@@ -68,7 +68,7 @@ Matrix* rotate(Matrix* line, double degree, double orx, double ory)
 	Rot->data[3][1] = 0;
 	Rot->data[3][2] = 0;
 	Rot->data[3][3] = 1;
-	
+
 	return Rot->multiply(line);
 }
 class Drawing: public Fl_Widget
@@ -119,7 +119,7 @@ public:
 
 class Lines
 {
-	
+
 public:
 	Line* lines[3];
 
