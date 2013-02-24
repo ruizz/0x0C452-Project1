@@ -23,11 +23,33 @@ int angle1 = 0;
 int angle2 = 0;
 int angle3 = 0;
 bool painting = false;
+bool moving = false;
+
 std::vector<Pair> pairs;
 
 Lines* arms;
+/*
+class win: public Fl_Window
+{
+	int handle(int event)
+	{
+		switch(event)
+		{
+		case FL_PUSH:
+		case FL_DRAG:
+			int x=Fl::event_x()-BX;
+			int y=BY-Fl::event_y();
+			printf("pos : %d %d\n", x, y);
+			if(y>=0)
+				arms->movetoPt(x,y);
+		}
+		return 1;
+	}
+public:
+	win(int x, int y, int w, int h, const char* text) : Fl_Window(x, y, w, h, text){}
 
-
+};
+*/
 void Drawing::draw()
 {
 	fl_color(FL_WHITE);
@@ -62,10 +84,7 @@ void Drawing::draw()
 
 	fl_pie(BX+arms->lines[2]->x2-5, BY-arms->lines[2]->y2-5, 10, 10, 0, 360);
 
-	if(painting){
-		pairs.push_back(Pair(BX+arms->lines[2]->x2-5, BY-arms->lines[2]->y2-5));
-	}
-
+	
 	fl_end_line();
 }
 
@@ -94,6 +113,20 @@ public:
 		int x1 = x();
 		int y1 = y();
 		fl_rectf(x1, y1, w1, h1);
+	}
+	int handle(int event)
+	{
+		switch(event)
+		{
+		case FL_PUSH:
+		case FL_DRAG:
+			int x=Fl::event_x()-BX;
+			int y=BY-Fl::event_y();
+			printf("pos : %d %d\n", x, y);
+			if(y>=0)
+				arms->movetoPt(x,y);
+		}
+		return 1;
 	}
 };
 
@@ -170,13 +203,14 @@ Pos* Line::rot(double deg, double x_axis, double y_axis)
 	mat->data[2][0] = 0;
 	mat->data[3][0] = 1;
 	Matrix* result = rotate(mat, deg, x_axis,y_axis);
-	if((ln != 0 &&result->data[1][0]<230) || (ln==0 && result->data[1][0]<280))
+	//if((ln != 0 &&result->data[1][0]<230) || (ln==0 && result->data[1][0]<280))
+	if((ln != 0 &&result->data[1][0]<-50) || (ln==0 && result->data[1][0]<0))
 	{
-		printf("eeeeeeeeee1111111111111111111111\n");
+		//printf("eeeeeeeeee1111111111111111111111\n");
 		return 0;
 	}
 	
-	
+	/*
 	printf("=======================\n");
 	for(int i=0; i<result->row; i++)
 	{
@@ -186,19 +220,22 @@ Pos* Line::rot(double deg, double x_axis, double y_axis)
 		}
 		printf("\n");
 	}
-
+	*/
 	Matrix* mat2 = new Matrix(4,1);
 	mat2->data[0][0] = x2-x_axis;
 	mat2->data[1][0] = y2-y_axis;
 	mat2->data[2][0] = 0;
 	mat2->data[3][0] = 1;
 	Matrix* result2 = rotate(mat2, deg, x_axis,y_axis);
-	if((ln != 0 &&result2->data[1][0]<230) || (ln==0 && result2->data[1][0]<280))
+	//if((ln != 0 &&result2->data[1][0]<230) || (ln==0 && result2->data[1][0]<280))
+	
+	if((ln != 0 &&result2->data[1][0]<-50) || (ln==0 && result2->data[1][0]<0))
 	{
-		printf("322222222222222222222222222222222\n");
+		//printf("322222222222222222222222222222222\n");
 		return 0;
 	}
-	printf("4333333333333333333333333333\n");
+	
+	//printf("4333333333333333333333333333\n");
 	/*
 	x1 = result->data[0][0];
 	y1 = result->data[1][0];
@@ -206,6 +243,7 @@ Pos* Line::rot(double deg, double x_axis, double y_axis)
 	y2 = result2->data[1][0];
 	*/
 
+	/*
 	printf("=======================\n");
 	for(int i=0; i<result2->row; i++)
 	{
@@ -215,11 +253,262 @@ Pos* Line::rot(double deg, double x_axis, double y_axis)
 		}
 		printf("\n");
 	}
+	*/
 	return new Pos(result->data[0][0],result->data[1][0],result2->data[0][0],result2->data[1][0]);
 }
+void Lines::rotate(double degree, int axis)
+{
+		
+	printf("rotate %f along %d axis\n", degree, axis);
+	switch(axis)
+	{
+		case 0:
+			{
+			//printf("AFEADSFASDFADSGFDSFADSF%d\n", lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1));
+			Pos* p0=lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1);
+			Pos* p1=lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1);
+			Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
+			/*
+			if(lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1) != 1)
+			{
+				printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
+				break;
+			}
+			if(lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1) == 1)
+			{
+				printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
+				break;
+			}
+			if(lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1) == 1)
+			{
+				printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
+				break;
+			}
+			*/
+			if(p0 !=0 && p1 != 0 && p2 != 0)
+			{
+				lines[0]->x1 = p0->x1;
+				lines[0]->y1 = p0->y1;
+				lines[0]->x2 = p0->x2;
+				lines[0]->y2 = p0->y2;
 
+				lines[1]->x1 = p1->x1;
+				lines[1]->y1 = p1->y1;
+				lines[1]->x2 = p1->x2;
+				lines[1]->y2 = p1->y2;
+
+				lines[2]->x1 = p2->x1;
+				lines[2]->y1 = p2->y1;
+				lines[2]->x2 = p2->x2;
+				lines[2]->y2 = p2->y2;
+			}
+			break;
+			}
+		case 1:
+			{
+			Pos* p1=lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1);
+			Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
+			if(p1 != 0 && p2 != 0)
+			{
+
+				lines[1]->x1 = p1->x1;
+				lines[1]->y1 = p1->y1;
+				lines[1]->x2 = p1->x2;
+				lines[1]->y2 = p1->y2;
+
+				lines[2]->x1 = p2->x1;
+				lines[2]->y1 = p2->y1;
+				lines[2]->x2 = p2->x2;
+				lines[2]->y2 = p2->y2;
+			}
+			break;
+			}
+		case 2:
+			{
+				
+			Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
+			if(p2 != 0)
+			{
+
+					
+				lines[2]->x1 = p2->x1;
+				lines[2]->y1 = p2->y1;
+				lines[2]->x2 = p2->x2;
+				lines[2]->y2 = p2->y2;
+			}
+			break;
+			}
+	}
+	if(painting && !moving){
+		bool dup=false;
+		for(int i=0; i<pairs.size(); i++)
+		{
+			if(pairs[i].x == (int)(BX+arms->lines[2]->x2-5) && pairs[i].y == (int)(BY-arms->lines[2]->y2-5))
+			{
+				dup = true;
+				break;
+			}
+		}
+		if(!dup)
+		{
+			printf("added in drawing %d\n", moving);
+			pairs.push_back(Pair(BX+arms->lines[2]->x2-5, BY-arms->lines[2]->y2-5));
+		}
+	}
+	if(!moving)
+	{
+		Fl::redraw();
+		Fl::check();
+	}
+}
+void Lines::movetoPt(double x, double y)
+{
+	moving = true;
+	//Before rotation, check it is a possible point
+	if(pow(x-lines[0]->x1, 2) + pow(y-lines[0]->y1,2) > pow((double)(L0+L1+L2), 2))
+	{
+		printf("Impossible point\n");
+		return;
+	}
+	//Line 0
+	if(pow(x-lines[0]->x2, 2) + pow(y-lines[0]->y2, 2) > pow((double)(L1+L2), 2))	//checking outter circle
+	{
+		double theta0 = acos((x-lines[0]->x1)/(sqrt(pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2))));
+		//double theta1 = asin((double)(L1+L2)/(sqrt(pow(x,2) + pow(y,2))));
+		double theta1 = acos((pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2)+pow((double)(L0),2)-pow((double)(L1+L2),2))/(2*L0*sqrt(pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2))));
+		double theta = acos((lines[0]->x2-lines[0]->x1)/L0);
+		//printf("AAA0 %f %f %f\n", theta0*180/PI, theta1*180/PI, theta*180/PI);
+
+		if(y<lines[0]->y1)
+		{
+			theta0 = -theta0;	//-acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+			//theta1 = -theta1;
+		}
+		if(lines[0]->y1 > lines[0]->y2)
+		{
+			theta = -theta;
+		}
+		if(theta0 > theta)
+		{
+			rotate((theta0-theta1-theta)*180/PI, 0);
+		}
+		else
+		{
+			rotate((theta0+theta1-theta)*180/PI, 0);
+		}
+	}
+	else if(pow(x-lines[0]->x2, 2) + pow(y-lines[0]->y2, 2) < pow((double)(L1-L2), 2))	//checking inner circle
+	{
+		double theta0 = acos((x)/(sqrt(pow(x,2) + pow(y,2))));
+		//double theta1 = asin((sqrt(pow((double)(L1-L2),2) - (pow(x-lines[0]->x2,2) + pow(y-lines[0]->y2,2))))/((double)(L1)));
+		double theta1 = acos((pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2)+pow((double)(L0),2)-pow((double)(L1-L2),2))/(2*L0*sqrt(pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2))));
+		double theta = acos((lines[0]->x2-lines[0]->x1)/L0);
+
+		//printf("AAA0 %f %f %f\n", theta0*180/PI, theta1*180/PI, theta*180/PI);
+		if(y<lines[0]->y1)
+		{
+			theta0 = -theta0;	//-acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+			//theta1 = -theta1;
+		}
+		if(lines[0]->y1 > lines[0]->y2)
+		{
+			theta = -theta;
+		}
+		if(theta0 > theta)
+		{
+			rotate(-theta1*180/PI, 0);
+		}
+		else
+		{
+			rotate(theta1*180/PI, 0);
+		}
+
+	}
+
+	//Line 1
+	if(pow(x-lines[1]->x2, 2) + pow(y-lines[1]->y2, 2) != pow((double)(L2), 2))
+	{
+		double theta0 = acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+		//double theta1 = atan((double)L2/L1);
+		double theta1 = acos((int)(((pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)+pow((double)L1,2)-pow((double)L2,2))/(2*L1*sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))))*100000000)/100000000.0);	//when it become 1.0000, it is not exactly 1.0000. so need to floor it at low decimal point? test "arms->movetoPt(0,140);"
+		double theta = acos((lines[1]->x2 - lines[1]->x1)/L1);
+		//double theta2 = acos((sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)) - L1)/L2);
+		if(y<lines[1]->y1)
+		{
+
+			theta0 = -theta0;	//-acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+			//theta1 = -theta1;
+		}
+		if(lines[1]->y1 > lines[1]->y2)
+		{
+			theta = -theta;
+		}
+		//printf("distance %f\n", sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)));
+		//printf("%f\n", (pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)+pow((double)L1,2)-pow((double)L2,2)));
+		//printf("%f %f %f\n", x-lines[1]->x1, y-lines[1]->y1, 2*L1*sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)));
+		//printf("%f\n", (pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)+pow((double)L1,2)-pow((double)L2,2))/(2*L1*sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+		//printf("%f\n", acos(1.000000));
+		//printf("AAA1 %f %f %f\n", theta0*180/PI, theta1*180/PI, theta*180/PI);
+		if(theta0>theta)
+		{
+			rotate((theta0-theta1-theta)*180/PI, 1);
+		}
+		else
+		{
+			rotate((theta0+theta1-theta)*180/PI, 1);
+		}
+	}
+	//double theta0 = acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+	//double theta = acos((lines[1]->x2 - lines[1]->x1)/L1);
+	//printf("AAA %f %f\n", theta0*180/PI, theta*180/PI);
+		
+	//Line 2
+	double theta0 = acos((x-lines[2]->x1)/(sqrt(pow(x-lines[2]->x1,2) + pow(y-lines[2]->y1,2))));
+	double theta = acos((lines[2]->x2 - lines[2]->x1)/L2);
+	if(y<lines[2]->y1)
+	{
+		theta0 = -theta0;	//-acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+		//theta1 = -theta1;
+	}
+	if(lines[2]->y1 > lines[2]->y2)
+	{
+		theta = -theta;
+	}
+	//printf("AAA2 %f %f\n", theta0*180/PI, theta*180/PI);
+	//printf("AAA2 %f\n", (theta0-theta)*180/PI);
+	if(theta0>theta)
+	{
+		rotate((theta0-theta)*180/PI, 2);
+	}
+	else
+	{
+		rotate((theta0-theta)*180/PI, 2);
+	}
+		
+	if(painting){
+		bool dup=false;
+
+		for(int i=0; i<pairs.size(); i++)
+		{
+			if(pairs[i].x == (int)(BX+arms->lines[2]->x2-5) && pairs[i].y == (int)(BY-arms->lines[2]->y2-5))
+			{
+				dup = true;
+				break;
+			}
+		}
+		if(!dup)
+		{
+			printf("added in moving\n");
+			pairs.push_back(Pair(BX+arms->lines[2]->x2-5, BY-arms->lines[2]->y2-5));
+		}
+	}
+	moving = false;
+	Fl::redraw();
+	Fl::check();
+}
 void j1_cc_callback(Fl_Widget*, void* v) {
 	arms->rotate(1, 0);
+
 }
 
 void j1_cl_callback(Fl_Widget*, void* v) {
@@ -235,11 +524,13 @@ void j2_cl_callback(Fl_Widget*, void* v) {
 }
 
 void j3_cc_callback(Fl_Widget*, void* v) {
-	arms->rotate(1, 2);
+	//arms->rotate(1, 2);
+	arms->movetoPt(0,140);
 }
 
 void j3_cl_callback(Fl_Widget*, void* v) {
-	arms->rotate(-1, 2);
+	//arms->rotate(-1, 2);
+	arms->movetoPt(0,140);
 }
 
 void paint_callback(Fl_Widget*, void* v) {
@@ -274,7 +565,7 @@ int main(int argc, char **argv) {
 	//CreateCircle joint3Circ(BX+arms->lines[2]->x1, BY-arms->lines[2]->y1);
 
 
-
+	
 
 	Fl_Box joint1_txt(215, 550, 30, 15, "Joint 1");
 	Fl_Button j1_cc(150, 570, 60, 30, "-");
@@ -282,7 +573,7 @@ int main(int argc, char **argv) {
 
 	j1_cc.callback(j1_cc_callback, NULL);
 	j1_cl.callback(j1_cl_callback, NULL);
-
+	
 	Fl_Box joint2_txt(460, 550, 30, 15, "Joint 2");
 	Fl_Button j2_cc(395, 570, 60, 30, "-");
 	Fl_Button j2_cl(495, 570, 60, 30, "+");

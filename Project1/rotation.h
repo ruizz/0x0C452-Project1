@@ -5,9 +5,17 @@
 #include <math.h>
 #define PI 3.14159265
 
+#define L0 150
+#define L1 100
+#define L2 75
+/*
 int BX = 500;
 int BY = 750;
+*/
+int BX = 475;
+int BY = 470;
 int XX = 200;	//
+
 
 struct Pos{
 	double x1;
@@ -61,7 +69,7 @@ public:
 };
 Matrix* rotate(Matrix* line, double degree, double orx, double ory)	
 {
-	printf("aaaaaaaaa %f\n", degree);
+	//printf("aaaaaaaaa %f\n", degree);
 	Matrix* Rot = new Matrix(4,4);
 	Rot->data[0][0] = cos(degree*PI/180);
 	Rot->data[0][1] = -sin(degree*PI/180);
@@ -127,6 +135,7 @@ public:
 		ln = l;
 	}
 	Pos* rot(double deg, double x_axis, double y_axis);
+
 };
 
 
@@ -138,92 +147,14 @@ public:
 
 	Lines()
 	{
-		lines[0] = new Line(-25,280,-25,430,0);
-		lines[1] = new Line(-25,430,-25,530,1);
-		lines[2] = new Line(-25,530,-25,605,2);
+		//lines[0] = new Line(-25,280,-25,430,0);
+		//lines[1] = new Line(-25,430,-25,530,1);
+		//lines[2] = new Line(-25,530,-25,605,2);
+		lines[0] = new Line(0,0,0,150,0);
+		lines[1] = new Line(0,150,0,250,1);
+		lines[2] = new Line(0,250,0,325,2);
 	}
-	void rotate(double degree, int axis)
-	{
-		switch(axis)
-		{
-			case 0:
-				{
-				//printf("AFEADSFASDFADSGFDSFADSF%d\n", lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1));
-				Pos* p0=lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-				Pos* p1=lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-				Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-				/*
-				if(lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1) != 1)
-				{
-					printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
-					break;
-				}
-				if(lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1) == 1)
-				{
-					printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
-					break;
-				}
-				if(lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1) == 1)
-				{
-					printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
-					break;
-				}
-				*/
-				if(p0 !=0 && p1 != 0 && p2 != 0)
-				{
-					lines[0]->x1 = p0->x1;
-					lines[0]->y1 = p0->y1;
-					lines[0]->x2 = p0->x2;
-					lines[0]->y2 = p0->y2;
-
-					lines[1]->x1 = p1->x1;
-					lines[1]->y1 = p1->y1;
-					lines[1]->x2 = p1->x2;
-					lines[1]->y2 = p1->y2;
-
-					lines[2]->x1 = p2->x1;
-					lines[2]->y1 = p2->y1;
-					lines[2]->x2 = p2->x2;
-					lines[2]->y2 = p2->y2;
-				}
-				break;
-				}
-			case 1:
-				{
-				Pos* p1=lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-				Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-				if(p1 != 0 && p2 != 0)
-				{
-
-					lines[1]->x1 = p1->x1;
-					lines[1]->y1 = p1->y1;
-					lines[1]->x2 = p1->x2;
-					lines[1]->y2 = p1->y2;
-
-					lines[2]->x1 = p2->x1;
-					lines[2]->y1 = p2->y1;
-					lines[2]->x2 = p2->x2;
-					lines[2]->y2 = p2->y2;
-				}
-				break;
-				}
-			case 2:
-				{
-				
-				Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-				if(p2 != 0)
-				{
-
-					
-					lines[2]->x1 = p2->x1;
-					lines[2]->y1 = p2->y1;
-					lines[2]->x2 = p2->x2;
-					lines[2]->y2 = p2->y2;
-				}
-				break;
-				}
-		}
-		Fl::redraw();
-		Fl::check();
-	}
+	void rotate(double degree, int axis);
+	void movetoPt(double x, double y);
+	
 };
