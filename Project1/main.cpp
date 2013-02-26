@@ -57,32 +57,35 @@ void Drawing::draw()
 	for (int i=0; i<pairs.size();i++){
 		fl_pie(pairs[i].x, pairs[i].y, 10, 10, 0, 360);
 	}
-	draw_line(arms->lines[0]->x1, arms->lines[0]->y1, arms->lines[0]->x2, arms->lines[0]->y2);
-	fl_color(FL_WHITE);
-	//draw_line(XX+0,150,0,100);
+
+
+	
 	draw_line(arms->lines[1]->x1, arms->lines[1]->y1, arms->lines[1]->x2, arms->lines[1]->y2);
 	fl_color(FL_WHITE);
-	//draw_line(XX+0,250,0,75);
+	//draw_line(XX+0,150,0,100);
 	draw_line(arms->lines[2]->x1, arms->lines[2]->y1, arms->lines[2]->x2, arms->lines[2]->y2);
+	fl_color(FL_WHITE);
+	//draw_line(XX+0,250,0,75);
+	draw_line(arms->lines[3]->x1, arms->lines[3]->y1, arms->lines[3]->x2, arms->lines[3]->y2);
 
 
 	fl_color(255, 255, 255);
 	//int x1 = (int)arms->lines[0]->x1, BY-arms->lines[0]->y1;
-	//int y1 = y()-5;
-	fl_pie(BX+arms->lines[0]->x1-5, BY-arms->lines[0]->y1-5, 10, 10, 0, 360);
-
-	//int x1 = x()-5;
 	//int y1 = y()-5;
 	fl_pie(BX+arms->lines[1]->x1-5, BY-arms->lines[1]->y1-5, 10, 10, 0, 360);
 
 	//int x1 = x()-5;
 	//int y1 = y()-5;
 	fl_pie(BX+arms->lines[2]->x1-5, BY-arms->lines[2]->y1-5, 10, 10, 0, 360);
+
+	//int x1 = x()-5;
+	//int y1 = y()-5;
+	fl_pie(BX+arms->lines[3]->x1-5, BY-arms->lines[3]->y1-5, 10, 10, 0, 360);
 	//fl_arc(point(0).x,point(0).y,r+r,r+r,0,360);
 	//fl_arc(100, 100, 200, 200, 0, 360);
 	//fl_pie(0,0,200,200,0,360);
 
-	fl_pie(BX+arms->lines[2]->x2-5, BY-arms->lines[2]->y2-5, 10, 10, 0, 360);
+	fl_pie(BX+arms->lines[3]->x2-5, BY-arms->lines[3]->y2-5, 10, 10, 0, 360);
 
 	
 	fl_end_line();
@@ -155,15 +158,15 @@ public:
 		fl_color(255, 255, 255);
 		//int x1 = (int)arms->lines[0]->x1, BY-arms->lines[0]->y1;
 		//int y1 = y()-5;
-		fl_pie(BX+arms->lines[0]->x1-5, BY-arms->lines[0]->y1-5, 10, 10, 0, 360);
-
-		//int x1 = x()-5;
-		//int y1 = y()-5;
 		fl_pie(BX+arms->lines[1]->x1-5, BY-arms->lines[1]->y1-5, 10, 10, 0, 360);
 
 		//int x1 = x()-5;
 		//int y1 = y()-5;
 		fl_pie(BX+arms->lines[2]->x1-5, BY-arms->lines[2]->y1-5, 10, 10, 0, 360);
+
+		//int x1 = x()-5;
+		//int y1 = y()-5;
+		fl_pie(BX+arms->lines[3]->x1-5, BY-arms->lines[3]->y1-5, 10, 10, 0, 360);
 
 
 	}
@@ -258,92 +261,124 @@ Pos* Line::rot(double deg, double x_axis, double y_axis)
 }
 void Lines::rotate(double degree, int axis)
 {
-		
 	printf("rotate %f along %d axis\n", degree, axis);
 	switch(axis)
 	{
 		case 0:
 			{
 			//printf("AFEADSFASDFADSGFDSFADSF%d\n", lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1));
-			Pos* p0=lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-			Pos* p1=lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-			Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-			/*
-			if(lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1) != 1)
-			{
-				printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
-				break;
-			}
-			if(lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1) == 1)
-			{
-				printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
-				break;
-			}
-			if(lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1) == 1)
-			{
-				printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
-				break;
-			}
-			*/
-			if(p0 !=0 && p1 != 0 && p2 != 0)
-			{
-				lines[0]->x1 = p0->x1;
-				lines[0]->y1 = p0->y1;
-				lines[0]->x2 = p0->x2;
-				lines[0]->y2 = p0->y2;
+			//Pos* p0=lines[0]->rot(degree, lines[axis]->x1, lines[axis]->y1);
+			//Pos* p1=lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1);
+			//Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
 
-				lines[1]->x1 = p1->x1;
-				lines[1]->y1 = p1->y1;
-				lines[1]->x2 = p1->x2;
-				lines[1]->y2 = p1->y2;
-
-				lines[2]->x1 = p2->x1;
-				lines[2]->y1 = p2->y1;
-				lines[2]->x2 = p2->x2;
-				lines[2]->y2 = p2->y2;
-			}
+			lines[1]->dh->theta += degree;
+			
+			
 			break;
 			}
 		case 1:
 			{
-			Pos* p1=lines[1]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-			Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-			if(p1 != 0 && p2 != 0)
-			{
-
-				lines[1]->x1 = p1->x1;
-				lines[1]->y1 = p1->y1;
-				lines[1]->x2 = p1->x2;
-				lines[1]->y2 = p1->y2;
-
-				lines[2]->x1 = p2->x1;
-				lines[2]->y1 = p2->y1;
-				lines[2]->x2 = p2->x2;
-				lines[2]->y2 = p2->y2;
-			}
+			lines[2]->dh->theta += degree;
+			
 			break;
 			}
 		case 2:
 			{
-				
-			Pos* p2=lines[2]->rot(degree, lines[axis]->x1, lines[axis]->y1);
-			if(p2 != 0)
-			{
-
-					
-				lines[2]->x1 = p2->x1;
-				lines[2]->y1 = p2->y1;
-				lines[2]->x2 = p2->x2;
-				lines[2]->y2 = p2->y2;
-			}
+			lines[3]->dh->theta += degree;	
+			
 			break;
 			}
 	}
+
+	////
+	Matrix* T1 = getTmat(lines[1]->dh->theta, lines[0]->dh->leng, 0);			//this leng can be -
+	Matrix* T2 = getTmat(lines[2]->dh->theta, lines[1]->dh->leng, 0);			//
+	Matrix* T3 = getTmat(lines[3]->dh->theta, lines[2]->dh->leng, 0);						//
+	Matrix* T4 = getTmat(0, lines[3]->dh->leng, 0);
+	//Matrix* T3 = getTmat(0, lines[1]->dh->leng, 0);						//
+
+	Matrix* mat = new Matrix(4,1);
+	mat->data[0][0] = 0;
+	mat->data[1][0] = 0;
+	mat->data[2][0] = 0;
+	mat->data[3][0] = 1;
+	Matrix* result = T1->multiply(mat);
+	lines[1]->x1 = result->data[0][0];
+	lines[1]->y1 = result->data[1][0];
+	/*
+	printf("=======================2\n");
+	for(int i=0; i<result->row; i++)
+	{
+		for(int j=0; j<result->col; j++)
+		{
+			printf("%f ", result->data[i][j]);
+		}
+		printf("\n");
+	}
+	*/
+			
+	//arms->updateXY();
+	//lines[1]->updateAxis(lines[0]->x2, lines[0]->y2);
+	result = (T1->multiply(T2))->multiply(mat);
+	lines[1]->x2 = result->data[0][0];
+	lines[1]->y2 = result->data[1][0];
+	lines[2]->x1 = result->data[0][0];
+	lines[2]->y1 = result->data[1][0];
+	/*
+	printf("=======================2\n");
+	for(int i=0; i<result->row; i++)
+	{
+		for(int j=0; j<result->col; j++)
+		{
+			printf("%f ", result->data[i][j]);
+		}
+		printf("\n");
+	}
+	*/
+			
+	result = ((T1->multiply(T2))->multiply(T3))->multiply(mat);
+	lines[2]->x2 = result->data[0][0];
+	lines[2]->y2 = result->data[1][0];
+	lines[3]->x1 = result->data[0][0];
+	lines[3]->y1 = result->data[1][0];
+	/*
+	printf("=======================2\n");
+	for(int i=0; i<result->row; i++)
+	{
+		for(int j=0; j<result->col; j++)
+		{
+			printf("%f ", result->data[i][j]);
+		}
+		printf("\n");
+	}
+	*/
+			
+	result = (((T1->multiply(T2))->multiply(T3))->multiply(T4))->multiply(mat);
+	lines[3]->x2 = result->data[0][0];
+	lines[3]->y2 = result->data[1][0];
+	/*
+	printf("=======================2\n");
+	for(int i=0; i<result->row; i++)
+	{
+		for(int j=0; j<result->col; j++)
+		{
+			printf("%f ", result->data[i][j]);
+		}
+		printf("\n");
+	}
+	*/
+
+
+
+
+
+
+	////
 	if(painting && !moving){
 		bool dup=false;
 		for(int i=0; i<pairs.size(); i++)
 		{
-			if(pairs[i].x == (int)(BX+arms->lines[2]->x2-5) && pairs[i].y == (int)(BY-arms->lines[2]->y2-5))
+			if(pairs[i].x == (int)(BX+arms->lines[3]->x2-5) && pairs[i].y == (int)(BY-arms->lines[3]->y2-5))
 			{
 				dup = true;
 				break;
@@ -352,7 +387,7 @@ void Lines::rotate(double degree, int axis)
 		if(!dup)
 		{
 			printf("added in drawing %d\n", moving);
-			pairs.push_back(Pair(BX+arms->lines[2]->x2-5, BY-arms->lines[2]->y2-5));
+			pairs.push_back(Pair(BX+arms->lines[3]->x2-5, BY-arms->lines[3]->y2-5));
 		}
 	}
 	if(!moving)
@@ -365,26 +400,29 @@ void Lines::movetoPt(double x, double y)
 {
 	moving = true;
 	//Before rotation, check it is a possible point
-	if(pow(x-lines[0]->x1, 2) + pow(y-lines[0]->y1,2) > pow((double)(L0+L1+L2), 2))
+	
+	if(pow(x-lines[1]->x1, 2) + pow(y-lines[1]->y1,2) > pow((double)(L0+L1+L2), 2))
 	{
 		printf("Impossible point\n");
+		moving = false;
 		return;
 	}
+	
 	//Line 0
-	if(pow(x-lines[0]->x2, 2) + pow(y-lines[0]->y2, 2) > pow((double)(L1+L2), 2))	//checking outter circle
+	if(pow(x-lines[1]->x2, 2) + pow(y-lines[1]->y2, 2) > pow((double)(L1+L2), 2))	//checking outter circle
 	{
-		double theta0 = acos((x-lines[0]->x1)/(sqrt(pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2))));
+		double theta0 = acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
 		//double theta1 = asin((double)(L1+L2)/(sqrt(pow(x,2) + pow(y,2))));
-		double theta1 = acos((pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2)+pow((double)(L0),2)-pow((double)(L1+L2),2))/(2*L0*sqrt(pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2))));
-		double theta = acos((lines[0]->x2-lines[0]->x1)/L0);
+		double theta1 = acos((pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)+pow((double)(L0),2)-pow((double)(L1+L2),2))/(2*L0*sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+		double theta = acos((lines[1]->x2-lines[1]->x1)/L0);
 		//printf("AAA0 %f %f %f\n", theta0*180/PI, theta1*180/PI, theta*180/PI);
 
-		if(y<lines[0]->y1)
+		if(y<lines[1]->y1)
 		{
 			theta0 = -theta0;	//-acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
 			//theta1 = -theta1;
 		}
-		if(lines[0]->y1 > lines[0]->y2)
+		if(lines[1]->y1 > lines[1]->y2)
 		{
 			theta = -theta;
 		}
@@ -397,20 +435,20 @@ void Lines::movetoPt(double x, double y)
 			rotate((theta0+theta1-theta)*180/PI, 0);
 		}
 	}
-	else if(pow(x-lines[0]->x2, 2) + pow(y-lines[0]->y2, 2) < pow((double)(L1-L2), 2))	//checking inner circle
+	else if(pow(x-lines[1]->x2, 2) + pow(y-lines[1]->y2, 2) < pow((double)(L1-L2), 2))	//checking inner circle
 	{
 		double theta0 = acos((x)/(sqrt(pow(x,2) + pow(y,2))));
 		//double theta1 = asin((sqrt(pow((double)(L1-L2),2) - (pow(x-lines[0]->x2,2) + pow(y-lines[0]->y2,2))))/((double)(L1)));
-		double theta1 = acos((pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2)+pow((double)(L0),2)-pow((double)(L1-L2),2))/(2*L0*sqrt(pow(x-lines[0]->x1,2) + pow(y-lines[0]->y1,2))));
-		double theta = acos((lines[0]->x2-lines[0]->x1)/L0);
+		double theta1 = acos((pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)+pow((double)(L0),2)-pow((double)(L1-L2),2))/(2*L0*sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+		double theta = acos((lines[1]->x2-lines[1]->x1)/L0);
 
-		//printf("AAA0 %f %f %f\n", theta0*180/PI, theta1*180/PI, theta*180/PI);
-		if(y<lines[0]->y1)
+		//printf("AAA1 %f %f %f\n", theta0*180/PI, theta1*180/PI, theta*180/PI);
+		if(y<lines[1]->y1)
 		{
 			theta0 = -theta0;	//-acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
 			//theta1 = -theta1;
 		}
-		if(lines[0]->y1 > lines[0]->y2)
+		if(lines[1]->y1 > lines[1]->y2)
 		{
 			theta = -theta;
 		}
@@ -426,20 +464,20 @@ void Lines::movetoPt(double x, double y)
 	}
 
 	//Line 1
-	if(pow(x-lines[1]->x2, 2) + pow(y-lines[1]->y2, 2) != pow((double)(L2), 2))
+	if(pow(x-lines[2]->x2, 2) + pow(y-lines[2]->y2, 2) != pow((double)(L2), 2))
 	{
-		double theta0 = acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
+		double theta0 = acos((x-lines[2]->x1)/(sqrt(pow(x-lines[2]->x1,2) + pow(y-lines[2]->y1,2))));
 		//double theta1 = atan((double)L2/L1);
-		double theta1 = acos((int)(((pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)+pow((double)L1,2)-pow((double)L2,2))/(2*L1*sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))))*100000000)/100000000.0);	//when it become 1.0000, it is not exactly 1.0000. so need to floor it at low decimal point? test "arms->movetoPt(0,140);"
-		double theta = acos((lines[1]->x2 - lines[1]->x1)/L1);
+		double theta1 = acos((int)(((pow(x-lines[2]->x1,2) + pow(y-lines[2]->y1,2)+pow((double)L1,2)-pow((double)L2,2))/(2*L1*sqrt(pow(x-lines[2]->x1,2) + pow(y-lines[2]->y1,2))))*100000000)/100000000.0);	//when it become 1.0000, it is not exactly 1.0000. so need to floor it at low decimal point? test "arms->movetoPt(0,140);"
+		double theta = acos((lines[2]->x2 - lines[2]->x1)/L1);
 		//double theta2 = acos((sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2)) - L1)/L2);
-		if(y<lines[1]->y1)
+		if(y<lines[2]->y1)
 		{
 
 			theta0 = -theta0;	//-acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
 			//theta1 = -theta1;
 		}
-		if(lines[1]->y1 > lines[1]->y2)
+		if(lines[2]->y1 > lines[2]->y2)
 		{
 			theta = -theta;
 		}
@@ -463,14 +501,14 @@ void Lines::movetoPt(double x, double y)
 	//printf("AAA %f %f\n", theta0*180/PI, theta*180/PI);
 		
 	//Line 2
-	double theta0 = acos((x-lines[2]->x1)/(sqrt(pow(x-lines[2]->x1,2) + pow(y-lines[2]->y1,2))));
-	double theta = acos((lines[2]->x2 - lines[2]->x1)/L2);
-	if(y<lines[2]->y1)
+	double theta0 = acos((x-lines[3]->x1)/(sqrt(pow(x-lines[3]->x1,2) + pow(y-lines[3]->y1,2))));
+	double theta = acos((lines[3]->x2 - lines[3]->x1)/L2);
+	if(y<lines[3]->y1)
 	{
 		theta0 = -theta0;	//-acos((x-lines[1]->x1)/(sqrt(pow(x-lines[1]->x1,2) + pow(y-lines[1]->y1,2))));
 		//theta1 = -theta1;
 	}
-	if(lines[2]->y1 > lines[2]->y2)
+	if(lines[3]->y1 > lines[3]->y2)
 	{
 		theta = -theta;
 	}
@@ -490,7 +528,7 @@ void Lines::movetoPt(double x, double y)
 
 		for(int i=0; i<pairs.size(); i++)
 		{
-			if(pairs[i].x == (int)(BX+arms->lines[2]->x2-5) && pairs[i].y == (int)(BY-arms->lines[2]->y2-5))
+			if(pairs[i].x == (int)(BX+arms->lines[3]->x2-5) && pairs[i].y == (int)(BY-arms->lines[3]->y2-5))
 			{
 				dup = true;
 				break;
@@ -499,7 +537,7 @@ void Lines::movetoPt(double x, double y)
 		if(!dup)
 		{
 			printf("added in moving\n");
-			pairs.push_back(Pair(BX+arms->lines[2]->x2-5, BY-arms->lines[2]->y2-5));
+			pairs.push_back(Pair(BX+arms->lines[3]->x2-5, BY-arms->lines[3]->y2-5));
 		}
 	}
 	moving = false;
@@ -524,13 +562,13 @@ void j2_cl_callback(Fl_Widget*, void* v) {
 }
 
 void j3_cc_callback(Fl_Widget*, void* v) {
-	//arms->rotate(1, 2);
-	arms->movetoPt(0,140);
+	arms->rotate(1, 2);
+	//arms->movetoPt(0,140);
 }
 
 void j3_cl_callback(Fl_Widget*, void* v) {
-	//arms->rotate(-1, 2);
-	arms->movetoPt(0,140);
+	arms->rotate(-1, 2);
+	//arms->movetoPt(0,140);
 }
 
 void paint_callback(Fl_Widget*, void* v) {
@@ -557,6 +595,7 @@ int main(int argc, char **argv) {
 	CreateBase base(450,470, 50,30);
 
 	arms = new Lines();
+	
 
 	CreateCircles joint1Circ();
 
